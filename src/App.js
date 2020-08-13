@@ -1,13 +1,11 @@
-import React from 'react';
-import Search from './Search/index';
-import EmployeeCard from './EmployeeCard';
+import React from 'react'
+import EmployeeContainer from './components/EmployeeContainer';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Search />
-        <EmployeeCard />
+        <EmployeeContainer />
       </header>
     </div>
   );

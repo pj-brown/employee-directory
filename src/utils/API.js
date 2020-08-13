@@ -5,5 +5,4 @@ export default {
   search: function() {
     return axios.get(BASEURL);
   }
-
 };
