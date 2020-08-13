@@ -4,53 +4,56 @@ import EmployeeCard from '../EmployeeCard'
 import Search from '../Search'
 
 export default class EmployeeContainer extends Component {
-    state = {
-        search: "",
-        results: []
-    };
+  state = {
+    search: "",
+    results: []
+  };
 
 
-    componentDidMount() {
-        this.searchEmployees();
-    }
+  componentDidMount() {
+    this.searchEmployees();
+  }
 
-    searchEmployees = () => {
-        API.search()
-        .then(res => this.setState({ results: res.data.results }))
-        .catch(err => console.log(err));
-    }
+  searchEmployees = () => {
+    API.search()
+      .then(res => {
+        console.log(res)
+        this.setState({ results: res.data.results })
+      })
+      .catch(err => console.log(err));
+  }
 
-    handleInputChange = event => {
-        // Getting the value and name of the input which triggered the change
-        const value = event.target.value;
-        const name = event.target.name;
-    
-        // Updating the input's state
-        this.setState({
-          [name]: value
-        });
-      };
-    
-      handleFormSubmit = event => {
-        // preventing the default bheavior of the form submit (which is to refresh the page)
-        event.preventDefault();
-        this.searchEmployees(this.state.search);
-      };
+  handleInputChange = event => {
+    const value = event.target.value;
+    const name = event.target.name;
 
-    render() {
-        return (
-          <div>
-            <Search />
-            <div className="card">
-                <div className="img-container">
-                    <EmployeeCard 
-                        // name={this.state.results.name.last}
-                        // picture={this.state.results.picture.medium}
-                        // location={this.state.results.location.city}
-                    />
-                </div>
-            </div>
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.searchEmployees(this.state.search);
+  };
+
+  render() {
+    return (
+      <div>
+        <Search />
+        <div className="card">
+          <div className="img-container">
+            {this.state.results.map((employee, i) => {
+              return (<EmployeeCard
+                name={employee.name.last}
+                picture={employee.picture.medium}
+                location={employee.location.city}
+              />)
+            })}
+
           </div>
-        )
-    }
+        </div>
+      </div>
+    )
+  }
 }
